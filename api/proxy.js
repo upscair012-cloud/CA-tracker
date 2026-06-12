@@ -45,6 +45,15 @@ export default {
     // ── Call Gemini API ──────────────────────────────
     // env.GEMINI_API_KEY is set in Cloudflare Worker env vars
     const GEMINI_KEY = env.GEMINI_API_KEY;
+    return new Response(
+  JSON.stringify({
+    prefix: GEMINI_KEY?.substring(0, 12),
+    length: GEMINI_KEY?.length
+  }),
+  {
+    headers: { "Content-Type": "application/json" }
+  }
+);
     const GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent";
     const fullPrompt = system
       ? `${system}\n\n${prompt}`
